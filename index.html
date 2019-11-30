@@ -26,7 +26,7 @@
                 <div class="col"></div>
             </div>
          </div>
-        
+
     <script>
         $(document).ready(function(){
             $('#CalendarioWeb').fullCalendar({
@@ -48,49 +48,18 @@
                     alert("vista actual:"+view.name);
                     $(this).css('background-color','red');
                     $("#exampleModal").modal();
-
                 },
-                eventSources:[{
-                    events:[
-                    {
-                        id:1,
-                        title:'Evento 1, Recoleccion de basura',
-                        descripcion:"Todo tipo de basura",
-                        start:'2019-11-25',
-                        color:"#FF0F0",
-                        textColor:"#FFFFFF"
-                    },
-                    {
-                        title:'Evento 2, Conferencias',
-                        descripcion:"Todos los grupos",
-                        start:'2019-11-27',
-                        end:'2019-11-29',
-                    },
-                    {
-                        title:'Evento 3, Reuniones',
-                        descripcion:"Rectoria",
-                        start:'2019-11-30T02:30:00',
-                        allDay:false,
-                        color:"green",
-                        textColor:"black"
-                    }
-                    
-                ],
-                color:"black",
-                textColor:"yellow"
-
-                }],
+                 events:"http://localhost/Calendario/eventos.php",
+                
                 eventClick:function(calEvent,jsEvent,view){
                     $('#tituloEvento').html(calEvent.title);
                     $('#descripcionEvento').html(calEvent.descripcion);
-
                     $("#exampleModal").modal();
-
                 }
                 
-
             });
 
+            
         });
 
     </script>
