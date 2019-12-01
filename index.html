@@ -113,7 +113,8 @@
 
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-success" >Agregar</button>
+
+            <button type="button" id="btnAgregar" class="btn btn-success" >Agregar</button>
             <button type="button" class="btn btn-success" >Modificar</button>
             <button type="button" class="btn btn-danger" >Borrar</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -122,7 +123,27 @@
     </div>
   </div>
 
+<script>
 
+ $('#btnAgregar').click(function(){
+
+     var NuevoEvento= {
+         title:$('#txtTitulo').val(),
+         start:$('#txtFecha').val()+" "+$('#txtHora').val(),
+         color:$('#txtColor').val(),
+         descripcion:$('#txtDescripcion').val(),
+         textColor:"#FFFFFF"
+
+
+     };
+     $('#CalendarioWeb').fullCalendar('renderEvent',NuevoEvento );
+     $("#ModalEventos").modal('toggle');
+
+
+ });
+
+
+</script>
 
     </body>
 </html>
