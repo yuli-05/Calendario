@@ -1,13 +1,34 @@
 <?php
 header('Content-Type: application/json');
-//le puse sistema por que es el nombre de mi base de datos :)
 $pdo=new PDO("mysql:dbname=sistema;localhost","root","");
 
-// Seleccionar los eventos del calendario 
-$sentenciaSQL= $pdo->prepare("SELECT * FROM eventos");
+$accion= (isset($_GET['accion']))?$_GET['accion']:'leer';
 
-$sentenciaSQL->execute();
+switch ($accion) {
+    case 'agregar':
+        # Instruccion de agregado
+        echo "Instruccion agregar";
+        break;
+    case 'eliminar':
+        # Instruccion de eliminar
+        echo "Instruccion eliminar";
+        break;
+    case 'modificar':
+        # Instruccion de modificar
+        echo "Instruccion modificar";
+        break;
+    
+    default:
+        // Seleccionar los eventos del calendario 
+            $sentenciaSQL= $pdo->prepare("SELECT * FROM eventos");
+            $sentenciaSQL->execute();
+            $resultado= $sentenciaSQL->fetchALL(PDO::FETCH_ASSOC);
+            echo json_encode($resultado);
+        
+        break;
+}
 
-$resultado= $sentenciaSQL->fetchALL(PDO::FETCH_ASSOC);
-echo json_encode($resultado);
+
 ?>
+
+
