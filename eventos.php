@@ -7,7 +7,20 @@ $accion= (isset($_GET['accion']))?$_GET['accion']:'leer';
 switch ($accion) {
     case 'agregar':
         # Instruccion de agregado
-        echo "Instruccion agregar";
+        $sentenciaSQL = $pdo->prepare("INSERT INTO 
+        eventos(title,descripcion,color,textColor,start,end) 
+        VALUES(:title,:descripcion,:color,:textColor,:start,:end)");
+
+        $respuesta=$sentenciaSQL->execute(array(
+            "title" =>$_POST['title'],
+            "descripcion" => $_POST['descripcion'],
+            "color" => $_POST['color'],
+            "textColor" => $_POST['textColor'],
+            "start" => $_POST['start'],
+            "end" => $_POST['end']
+
+        ));
+        echo json_encode($respuesta);
         break;
     case 'eliminar':
         # Instruccion de eliminar
