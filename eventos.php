@@ -24,11 +24,44 @@ switch ($accion) {
         break;
     case 'eliminar':
         # Instruccion de eliminar
-        echo "Instruccion eliminar";
+        #echo "Instruccion eliminar";
+        $respuesta=false;
+
+        if (isset($_POST['id'])){
+
+            $sentenciaSQL= $pdo->prepare("DELETE FROM eventos WHERE ID=:ID");
+            $respuesta= $sentenciaSQL->execute(array("ID"=>$_POST['id'])); 
+        }
+        echo json_encode($respuesta);
+
+
+
         break;
     case 'modificar':
         # Instruccion de modificar
-        echo "Instruccion modificar";
+        
+        $sentenciaSQL = $pdo->prepare("UPDATE eventos SET
+        title=:title,
+        descripcion=:descripcion,
+        color=:color,
+        textColor=:textColor,
+        start=:start,
+        end=:end
+        WHERE ID=:ID
+        ");
+
+        $respuesta=$sentenciaSQL->execute(array(
+            "ID" =>$_POST['id'],
+            "title" =>$_POST['title'],
+            "descripcion" => $_POST['descripcion'],
+            "color" => $_POST['color'],
+            "textColor" => $_POST['textColor'],
+            "start" => $_POST['start'],
+            "end" => $_POST['end']
+
+        ));
+        echo json_encode($respuesta);
+
         break;
     
     default:
