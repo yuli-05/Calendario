@@ -48,6 +48,7 @@
                     }
                 },
                 dayClick:function(date,jsEvent,view){
+                    limpiarFormulario();
                     $('#txtFecha').val(date.format());
                     $("#ModalEventos").modal();
                 },
@@ -203,6 +204,14 @@ function EnviarInformacion(accion,objEvento,modal){
 }
 
 $('.clockpicker').clockpicker();
+function limpiarFormulario(){
+                    $('#txtID').val('');
+                    $('#txtTitulo').val('');
+                    $('#txtColor').val('');
+                    $('#txtDescripcion').val('');
+
+}
+
 
 </script>
 
