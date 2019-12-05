@@ -44,9 +44,6 @@
                     }
                 },
                 dayClick:function(date,jsEvent,view){
-
-
-
                     $('#txtFecha').val(date.format());
                     $("#ModalEventos").modal();
                 },
@@ -63,19 +60,32 @@
                     $('#txtTitulo').val(calEvent.title);
                     $('#txtColor').val(calEvent.color);
 
+
                     FechaHora= calEvent.start._i.split(" ");
                     $('#txtFecha').val(FechaHora[0]);
-                    $('#txtHora').val(FechaHora[1]);
-
+                   
 
                     $("#ModalEventos").modal();
+                },
+                editable:true,
+                eventDrop:function(calEvent){
+                    $('#txtID').val(calEvent.id);
+                    $('#txtTitulo').val(calEvent.title);
+                    $('#txtColor').val(calEvent.color);
+                    $('#txtDescripcion').val(calEvent.descripcion);
+
+                    var fechaHora=calEvent.start.format().split("T");
+                    $('#txtFecha').val(fechaHora[0]);
+                    $('#txtHora').val(fechaHora[1]);
+
+                    RecolectarDatosGUI();
+                    EnviarInformacion('modificar',NuevoEvento,true);
+
                 }
+
                 
             });
-
-
         });
-
     </script>
 
 
@@ -91,13 +101,28 @@
         </div>
         <div class="modal-body">
           
-          id:<input type="text" id="txtID" name="txtID"><br/>
-          Fecha: <input type="text" id="txtFecha" name="txtFecha" /><br/>
-          Titulo:<input type="text" id="txtTitulo"><br/>
-          Hora:<input type="text" id="txtHora" value="10:30" /><br/>
-          Descripción:<textarea id="txtDescripcion" rows="3"></textarea><br/>
-          Color:<input type="color" value="#ff0000" id="txtColor"><br/>
+          <input type="hidden" id="txtID" name="txtID">
+           <input type="hidden" id="txtFecha" name="txtFecha" />
 
+            <div class="form-row">
+                <div class="form-group col-md-8">
+                    <label>Titulo:</label>
+                    <input type="text" id="txtTitulo" class="form-control" placeholder="Titulo del evento">
+                </div>
+                <div class="form-group col-md-4">
+                        <label>Hora del evento</label>
+                        <input type="text" id="txtHora" value="10:30" class="form-control" />
+                </div>
+
+            </div>
+            <div class="form-group" >
+                    <label >Descripción:</label>
+                    <textarea id="txtDescripcion" rows="3" class="form-control"></textarea>
+                </div>
+                <div class="form-group" >
+                        <label >Color:</label>
+                        <input type="color" value="#ff0000" id="txtColor" class="form-control" style="height:36px;">
+                </div>
 
 
         </div>
@@ -130,9 +155,6 @@ $('#btnModificar').click(function(){
      EnviarInformacion('modificar',NuevoEvento);
      
 });
-
-
-
 function RecolectarDatosGUI(){
     NuevoEvento= {
          id:$('#txtID').val(),
@@ -143,9 +165,8 @@ function RecolectarDatosGUI(){
          textColor:"#FFFFFF",
          end:$('#txtFecha').val()+" "+$('#txtHora').val()
         };
-
 }
-function EnviarInformacion(accion,objEvento){
+function EnviarInformacion(accion,objEvento,modal){
         $.ajax({
             type:'POST',
             url:'eventos.php?accion='+accion,
@@ -153,22 +174,19 @@ function EnviarInformacion(accion,objEvento){
             success:function(msg){
              if(msg){
                 $('#CalendarioWeb').fullCalendar('refetchEvents');
-                $("#ModalEventos").modal('toggle');
+                if(!modal){
+                    $("#ModalEventos").modal('toggle');
+                }
 
+
+               
              }
             },
             error:function(){
                 alert("Hay un error..");
             }
-
         });
-
-
-
 }
-
-
-
 </script>
 
 </body>
