@@ -21,12 +21,24 @@
          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" ></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
 
+
+        <style>
+        
+            .fc th{
+                padding: 10px 0px;
+                vertical-align: middle;
+                background: #00b347;
+
+
+            }
+        </style>
+
     </head>
     <body>
         <div class="container">
             <div class="row">
                 <div class="col"></div>
-                <div class="col-7"> <div id="CalendarioWeb" ></div></div> 
+                <div class="col-7"> </br></br> <div id="CalendarioWeb" ></div></div> 
                 <div class="col"></div>
             </div>
          </div>
@@ -35,19 +47,17 @@
         $(document).ready(function(){
             $('#CalendarioWeb').fullCalendar({
                 header:{
-                    left:'today,prev,next,Miboton',
+                    left:'today,prev,next',
                     center:'title',
                     right:'month,basicWeek, basicDay, agendaWeek, agendaDay'
-                },
-                customButtons:{
-                    Miboton:{
-                        text:"Boton 1",
-                        click:function(){
-                            alert("Accion del boton");
-                        }
-                    }
-                },
-                dayClick:function(date,jsEvent,view){
+                },dayClick:function(date,jsEvent,view){
+
+
+                    $('#btnAgregar').prop("disabled",false);
+                    $('#btnModificar').prop("disabled",true);
+                    $('#btnEliminar').prop("disabled",true);
+
+
                     limpiarFormulario();
                     $('#txtFecha').val(date.format());
                     $("#ModalEventos").modal();
@@ -55,6 +65,13 @@
                  events:"http://localhost/Calendario/eventos.php",
                 
                 eventClick:function(calEvent,jsEvent,view){
+
+
+                    $('#btnAgregar').prop("disabled",true);
+                    $('#btnModificar').prop("disabled",false);
+                    $('#btnEliminar').prop("disabled",false);
+
+
 
                     // H2
                     $('#tituloEvento').html(calEvent.title);
